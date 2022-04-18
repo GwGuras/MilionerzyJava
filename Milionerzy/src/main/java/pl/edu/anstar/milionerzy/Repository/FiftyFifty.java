@@ -19,4 +19,5 @@ public class FiftyFifty {
         newLAnswers.add(temp);
         return newLAnswers;
     }
+    //TODO optimalization
 }
