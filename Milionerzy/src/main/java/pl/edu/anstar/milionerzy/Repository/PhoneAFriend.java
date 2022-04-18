@@ -23,6 +23,6 @@ public class PhoneAFriend {
         else{
             return lAnswers.get(rand.nextInt());
         }
-
+        //TODO optimalization
     }
 }
