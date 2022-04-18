@@ -15,7 +15,6 @@ public class PhoneAFriend {
         lCAnswer = cAnswer;
     }
     public String getPAFAnswer(){
-        String pafAnswer;
         Random rand = new Random();
         if(lqNumber<5){
             return lCAnswer;
