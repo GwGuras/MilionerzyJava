@@ -21,6 +21,12 @@ public class Question {
 		FIRST, SECOND, THIRD, FOURTH
 	}
 	
+	/**
+	 * 
+	 * @param which {@link Answer} enum poining to which question from array do we
+	 *              want to get (FIRST,SECOND,THIRD,FOURTH)
+	 * @return {@link String} literal of answer. Ready to be inserted into button
+	 */
 	public String getAnswer(Answer which) {
 		switch (which) {
 		case FIRST:
@@ -40,6 +46,11 @@ public class Question {
 		return answersArray;
 	}
 	
+	/**
+	 * 
+	 * @return Correct answer number from {@code 1} to {@code 4} of this
+	 *         {@link Question} object
+	 */
 	public byte getCorrect() {
 		return correct;
 	}
@@ -60,7 +71,12 @@ public class Question {
 		}
 	}
 	
-	public static Question getRandomQuestion(int prize) {
+	/**
+	 * 
+	 * @param prize Prize money expected for this question as in database
+	 * @return {@link Question} object
+	 */
+	public static Question getRandomQuestionfromDatabase(int prize) {
 		Connection connection = null;
 		try {
 			StringBuilder sB = new StringBuilder("jdbc:sqlite:");
@@ -85,5 +101,7 @@ public class Question {
 		}
 		return null;
 	}
+	
+//	public static Question getRandomFromCSV
 	
 }
