@@ -1,8 +1,5 @@
 package pl.edu.anstar.milionerzy.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,6 +10,11 @@ public class Question {
 	private int prize;
 	private String questionString;
 	
+	/**
+	 * 
+	 * @return {@link String} literal of question. Ready to be inserted into
+	 *         question text field.
+	 */
 	public String getQuestionString() {
 		return questionString;
 	}
@@ -42,10 +44,6 @@ public class Question {
 		}
 	}
 	
-	public String[] getAnswersArray() {
-		return answersArray;
-	}
-	
 	/**
 	 * 
 	 * @return Correct answer number from {@code 1} to {@code 4} of this
@@ -55,8 +53,19 @@ public class Question {
 		return correct;
 	}
 	
+	/**
+	 * 
+	 * @return which prize was this question associated with
+	 */
 	public int getPrize() {
 		return prize;
+	}
+	
+	public Question(String questionString, String[] answersArray, byte correct, int prize) {
+		this.answersArray = answersArray;
+		this.correct = correct;
+		this.questionString = questionString;
+		this.prize = prize;
 	}
 	
 	public Question(ResultSet resultSet, int prize) {
@@ -70,38 +79,5 @@ public class Question {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * 
-	 * @param prize Prize money expected for this question as in database
-	 * @return {@link Question} object
-	 */
-	public static Question getRandomQuestionfromDatabase(int prize) {
-		Connection connection = null;
-		try {
-			StringBuilder sB = new StringBuilder("jdbc:sqlite:");
-			sB.append(System.getProperty("user.dir")); // project location
-			sB.append("/resources/assets/Milionerzy.db");
-			connection = DriverManager.getConnection(sB.toString());
-			PreparedStatement statement = connection
-					.prepareStatement("SELECT question,answer1,answer2,answer3,answer4,correct"
-							+ " FROM Quesitons WHERE prize=" + prize + " ORDER BY random() LIMIT 1;");
-			ResultSet results = statement.executeQuery();
-			return new Question(results, prize);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-	
-//	public static Question getRandomFromCSV
 	
 }
