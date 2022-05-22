@@ -80,4 +80,16 @@ public class Question {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sB = new StringBuilder(this.questionString);
+		sB.append(System.lineSeparator());
+		for (String s : answersArray) {
+			sB.append(s);
+			sB.append(System.lineSeparator());
+		}
+		sB.append("Correct: " + this.correct);
+		return sB.toString();
+	}
+	
 }

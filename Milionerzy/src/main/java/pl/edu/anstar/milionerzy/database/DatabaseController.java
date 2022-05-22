@@ -18,10 +18,9 @@ public class DatabaseController {
 		Connection connection = null;
 		try {
 			StringBuilder sB = new StringBuilder("jdbc:sqlite:");
-			sB.append(System.getProperty("user.dir")); // project location
-			sB.append("/resources/assets/Milionerzy.db");
-//			URL pathToFile = DatabaseController.class.getClass().getClassLoader().getResource("Milionerzy.db");
-//			sB.append(pathToFile);
+			sB.append(DatabaseController.class.getResource("Milionerzy.db").getPath());
+			System.out.println("Attempting to connect to:");
+			System.out.println(sB.toString());
 			connection = DriverManager.getConnection(sB.toString());
 			PreparedStatement statement = connection
 					.prepareStatement("SELECT question,answer1,answer2,answer3,answer4,correct"
@@ -29,7 +28,8 @@ public class DatabaseController {
 			ResultSet results = statement.executeQuery();
 			return new Question(results, prize);
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} finally {
 			try {
 				if (connection != null) {

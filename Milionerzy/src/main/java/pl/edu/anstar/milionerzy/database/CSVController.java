@@ -20,25 +20,24 @@ public class CSVController {
 	public static Question getRandomQuestion(int prize) {
 		try {
 			String csvNumber = getStageNumber(prize);
-			URL csvFileLocation = CSVController.class.getClass().getClassLoader().getResource(csvNumber + ".csv");
-			System.out.println("CSV resource location: " + csvFileLocation);
-			File CSVFile = new File(csvFileLocation.toString());
+			System.out.println("CSV number: " + csvNumber);
+//			System.out.println(CSVController.class.getResource("2.csv"));
+			URL csvFileLocation = CSVController.class.getResource(csvNumber + ".csv");
+			System.out.println("CSV resource location url: " + csvFileLocation);
+			File CSVFile = new File(csvFileLocation.getPath());
 			BufferedReader br = new BufferedReader(new FileReader(CSVFile));
 			int rand = new Random().nextInt(LINES_IN_CSV); // random from 0 to lines-1
-			for (int i = 0; i <= rand + 1; i++) {
+			for (int i = 0; i <= rand - 1; i++) {
 				br.readLine();
 			}
 			String line = br.readLine();
 			br.close();
 			String[] record = line.split(SPLIT_DELIM);
 			// question;answer1;answer2;answer3;answer4;correct
-			
 			String question = record[0];
 			byte correct = Byte.parseByte(record[5]);
 			String[] answersArray = new String[4];
-			for (int i = 1; i < 4; i++) {
-				answersArray[i - 1] = record[i];
-			}
+			System.arraycopy(record, 1, answersArray, 0, 4);
 			return new Question(question, answersArray, correct, prize);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
